@@ -15,7 +15,7 @@ public class IPersistenceTest {
 
     @Test
     public void test() throws Exception {
-        InputStream resourceAsSteam = Resources.getResourceAsSteam("sqlMapConfig.xml");
+        InputStream resourceAsSteam = Resources.getResourceAsStream("sqlMapConfig.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsSteam);
         SqlSession sqlSession = sqlSessionFactory.openSession();
 

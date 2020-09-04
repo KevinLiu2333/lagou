@@ -24,7 +24,7 @@ public class ConnectionUtils {
     /**
      * 从当前线程获取连接
      */
-    public Connection getCurrentThreadConn() throws SQLException {
+    public Connection  xgetCurrentThreadConn() throws SQLException {
         /**
          * 判断当前线程中是否已经绑定连接，如果没有绑定，需要从连接池获取一个连接绑定到当前线程
           */

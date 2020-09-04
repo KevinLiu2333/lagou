@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.language;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.SqlSource;
@@ -29,6 +25,11 @@ import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.RuntimeSingleton;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
+
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Just a test case. Not a real Velocity implementation.
@@ -51,7 +52,7 @@ public class VelocitySqlSource implements SqlSource {
     try {
       RuntimeServices runtimeServices = RuntimeSingleton.getRuntimeServices();
       StringReader reader = new StringReader(scriptText);
-      SimpleNode node = runtimeServices.parse(reader, "Template name");
+      SimpleNode node = runtimeServices.parse(reader, new Template());
       script = new Template();
       script.setRuntimeServices(runtimeServices);
       script.setData(node);

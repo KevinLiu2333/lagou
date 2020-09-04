@@ -50,7 +50,7 @@ public class XMLConfigBuilder {
 
         for (Element element : mapperList) {
             String mapperPath = element.attributeValue("resource");
-            InputStream resourceAsSteam = Resources.getResourceAsSteam(mapperPath);
+            InputStream resourceAsSteam = Resources.getResourceAsStream(mapperPath);
             XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configuration);
             xmlMapperBuilder.parse(resourceAsSteam);
 
