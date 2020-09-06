@@ -1,9 +1,8 @@
 package com.lagou.edu.dao.impl;
 
-import com.lagou.edu.pojo.Account;
 import com.lagou.edu.dao.AccountDao;
+import com.lagou.edu.pojo.Account;
 import com.lagou.edu.utils.ConnectionUtils;
-import com.lagou.edu.utils.DruidUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +19,6 @@ public class JdbcAccountDaoImpl implements AccountDao {
         this.connectionUtils = connectionUtils;
     }
 
-
     public void init() {
         System.out.println("初始化方法.....");
     }
@@ -31,16 +29,17 @@ public class JdbcAccountDaoImpl implements AccountDao {
 
     @Override
     public Account queryAccountByCardNo(String cardNo) throws Exception {
-        //从连接池获取连接
-        // Connection con = DruidUtils.getInstance().getConnection();
+        /**
+         * 从连接池获取当前链接
+         */
         Connection con = connectionUtils.getCurrentThreadConn();
         String sql = "select * from account where cardNo=?";
         PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setString(1,cardNo);
+        preparedStatement.setString(1, cardNo);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Account account = new Account();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             account.setCardNo(resultSet.getString("cardNo"));
             account.setName(resultSet.getString("name"));
             account.setMoney(resultSet.getInt("money"));

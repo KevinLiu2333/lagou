@@ -1,10 +1,5 @@
 package designpattern.proxy.staticproxy;
 
-import designpattern.proxy.staticproxy.IRentingHouse;
-import designpattern.proxy.staticproxy.RentingHouseImpl;
-import designpattern.proxy.staticproxy.RentingHouseProxy;
-
-
 
 public class Test {
 
@@ -14,8 +9,8 @@ public class Test {
         // rentingHouse.rentHosue();
 
 
-
+        //静态代理--对应实际存在的java类
         RentingHouseProxy rentingHouseProxy = new RentingHouseProxy(rentingHouse);
-        rentingHouseProxy.rentHosue();
+        rentingHouseProxy.rentHouse();
     }
 }

@@ -1,0 +1,4 @@
+### 1.1BeanFactory和ApplicationContext的关系
+BeanFactory是IOC顶层接口,只用来定义一些基础功能.基础规范.
+ApplicationContext是他的一个子接口,所以Application包含BeanFactory提供的全部功能
+通常称BeanFactory是基础容器,ApplicationContext是高级接口,比BeanFactory拥有更多功能,比如国际化支持和资源访问(xml,java配置类)等等

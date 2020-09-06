@@ -1,12 +1,10 @@
 package com.lagou.edu.servlet;
 
+import com.lagou.edu.factory.BeanFactory;
 import com.lagou.edu.factory.ProxyFactory;
-import com.lagou.edu.utils.JsonUtils;
 import com.lagou.edu.pojo.Result;
 import com.lagou.edu.service.TransferService;
-import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import com.lagou.edu.utils.JsonUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,7 @@ import java.io.IOException;
 /**
  * @author 应癫
  */
-@WebServlet(name="transferServlet",urlPatterns = "/transferServlet")
+@WebServlet(name = "transferServlet", urlPatterns = "/transferServlet")
 public class TransferServlet extends HttpServlet {
 
     // 1. 实例化service层对象
@@ -28,24 +26,14 @@ public class TransferServlet extends HttpServlet {
     // 从工厂获取委托对象（委托对象是增强了事务控制的功能）
 
     // 首先从BeanFactory获取到proxyFactory代理工厂的实例化对象
-    //private ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
-    private TransferService transferService = null ;
+    private ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
+    //
+    private TransferService transferService = (TransferService) proxyFactory.getJdkProxy(BeanFactory.getBean("transferService"));
 
-
-    @Override
-    public void init() throws ServletException {
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
-        transferService = (TransferService) webApplicationContext.getBean("transferService");
-
-
-       /* WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
-        ProxyFactory proxyFactory = (ProxyFactory)webApplicationContext.getBean("proxyFactory");
-        transferService = (TransferService) proxyFactory.getJdkProxy(webApplicationContext.getBean("transferService")) ;*/
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+        doPost(req, resp);
     }
 
     @Override

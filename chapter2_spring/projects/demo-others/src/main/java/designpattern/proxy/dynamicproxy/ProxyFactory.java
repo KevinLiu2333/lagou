@@ -2,23 +2,21 @@ package designpattern.proxy.dynamicproxy;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
+ * 横切逻辑增强
+ *
  * @author 应癫
- *
- *
+ * <p>
+ * <p>
  * 代理对象工厂：生成代理对象的
  */
 
 public class ProxyFactory {
 
-
-    private ProxyFactory(){
+    private ProxyFactory() {
 
     }
 
@@ -28,51 +26,45 @@ public class ProxyFactory {
         return proxyFactory;
     }
 
-
+    ;
 
     /**
-     * Jdk动态代理
-     * @param obj  委托对象
-     * @return   代理对象
+     * JDK动态代理
+     *
+     * @param obj 委托对象
+     * @return 代理对象
      */
     public Object getJdkProxy(Object obj) {
+        return Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(), (proxy1, method, args1) -> {
+            Object result = null;
+            //写增强逻辑
+            System.out.println("中介（代理）收取服务费3000元");
+            //调用原有业务逻辑
+            result = method.invoke(obj, args1);
+            System.out.println("客户信息卖了3毛钱");
+            return result;
+        });
 
-        // 获取代理对象
-        return  Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(),
-                new InvocationHandler() {
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        Object result = null;
-
-                        // 写增强逻辑
-                        System.out.println("中介（代理）收取服务费3000元");
-                        // 调用原有业务逻辑
-                        result = method.invoke(obj,args);
-
-                        System.out.println("客户信息卖了3毛钱");
-
-                        return result;
-                    }
-                });
 
     }
-
 
     /**
-     * 使用cglib动态代理生成代理对象
+     * cglib生成代理对象
+     *
      * @param obj 委托对象
-     * @return
+     * @return 代理对象
      */
     public Object getCglibProxy(Object obj) {
-        return  Enhancer.create(obj.getClass(), new MethodInterceptor() {
-            @Override
-            public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-                Object result = null;
-                System.out.println("中介（代理）收取服务费3000元");
-                result = method.invoke(obj,objects);
-                System.out.println("客户信息卖了3毛钱");
-                return result;
-            }
+        return Enhancer.create(obj.getClass(), (MethodInterceptor) (o, method, objects, methodProxy) -> {
+            Object result = null;
+            System.out.println("中介（代理）收取服务费3000元");
+            //调用原有业务逻辑
+            result = method.invoke(obj, objects);
+            System.out.println("客户信息卖了3毛钱");
+            return result;
         });
+
+
     }
+
 }
