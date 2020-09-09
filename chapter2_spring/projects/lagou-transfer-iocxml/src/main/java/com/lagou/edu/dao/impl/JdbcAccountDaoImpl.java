@@ -7,6 +7,9 @@ import com.lagou.edu.utils.ConnectionUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author 应癫
@@ -14,6 +17,50 @@ import java.sql.ResultSet;
 public class JdbcAccountDaoImpl implements AccountDao {
 
     private ConnectionUtils connectionUtils;
+
+    private String name;
+    private int sex;
+    private float money;
+
+    private String[] myArray;
+    private Map<String, String> myMap;
+    private Set<String> mySet;
+    private Properties myProperties;
+
+    public void setMyArray(String[] myArray) {
+        this.myArray = myArray;
+    }
+
+    public void setMyMap(Map<String, String> myMap) {
+        this.myMap = myMap;
+    }
+
+    public void setMySet(Set<String> mySet) {
+        this.mySet = mySet;
+    }
+
+    public void setMyProperties(Properties myProperties) {
+        this.myProperties = myProperties;
+    }
+
+    public JdbcAccountDaoImpl(ConnectionUtils connectionUtils, String name, int sex, float money) {
+        this.connectionUtils = connectionUtils;
+        this.name = name;
+        this.sex = sex;
+        this.money = money;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public void setMoney(float money) {
+        this.money = money;
+    }
 
     public void setConnectionUtils(ConnectionUtils connectionUtils) {
         this.connectionUtils = connectionUtils;
@@ -23,7 +70,7 @@ public class JdbcAccountDaoImpl implements AccountDao {
         System.out.println("初始化方法.....");
     }
 
-    public void destory() {
+    public void destroy() {
         System.out.println("销毁方法......");
     }
 

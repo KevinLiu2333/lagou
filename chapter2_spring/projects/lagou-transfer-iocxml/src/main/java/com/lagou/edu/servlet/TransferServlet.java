@@ -1,10 +1,11 @@
 package com.lagou.edu.servlet;
 
-import com.lagou.edu.factory.BeanFactory;
 import com.lagou.edu.factory.ProxyFactory;
 import com.lagou.edu.pojo.Result;
 import com.lagou.edu.service.TransferService;
 import com.lagou.edu.utils.JsonUtils;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,17 +20,19 @@ import java.io.IOException;
 @WebServlet(name = "transferServlet", urlPatterns = "/transferServlet")
 public class TransferServlet extends HttpServlet {
 
-    // 1. 实例化service层对象
-    //private TransferService transferService = new TransferServiceImpl();
-    //private TransferService transferService = (TransferService) BeanFactory.getBean("transferService");
+    private ProxyFactory proxyFactory;
 
-    // 从工厂获取委托对象（委托对象是增强了事务控制的功能）
+    private TransferService transferService;
 
-    // 首先从BeanFactory获取到proxyFactory代理工厂的实例化对象
-    private ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
-    //
-    private TransferService transferService = (TransferService) proxyFactory.getJdkProxy(BeanFactory.getBean("transferService"));
+    @Override
+    public void init() throws ServletException {
+        //在servlet中获取IOC
+        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
+        this.proxyFactory = (ProxyFactory) webApplicationContext.getBean("proxyFactory");
+        this.transferService = (TransferService) webApplicationContext.getBean("transferService");
 
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,19 +1,19 @@
 package com.lagou.edu.pojo;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 /**
  * @author 应癫
  */
-public class Result implements BeanNameAware,BeanFactoryAware,ApplicationContextAware,InitializingBean, DisposableBean {
+//延迟加载
+//@Lazy
+public class Result implements BeanFactoryAware, BeanNameAware, ApplicationContextAware, InitializingBean {
 
     private String status;
     private String message;
@@ -43,43 +43,32 @@ public class Result implements BeanNameAware,BeanFactoryAware,ApplicationContext
     }
 
     @Override
-    public void setBeanName(String name) {
-        System.out.println("注册我成为bean时定义的id：" + name);
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        System.out.println("管理我的beanfactory为: " + beanFactory);
     }
 
     @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        System.out.println("管理我的beanfactory为：" + beanFactory);
+    public void setBeanName(String name) {
+        System.out.println("注册我成为bean时的id: " + name);
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        System.out.println("高级容器接口ApplicationContext：" + applicationContext);
+        System.out.println("高级容器接口: " + applicationContext);
     }
+
+    public void initMethod() {
+        System.out.println("init-method......");
+    }
+
+    //    @PostConstruct
+    public void postConstruct() {
+        System.out.println("postConstruct");
+    }
+
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("afterPropertiesSet......");
-    }
-
-
-    public void initMethod() {
-        System.out.println("init-method....");
-    }
-
-    @PostConstruct
-    public void postCoustrcut() {
-        System.out.println("postCoustrcut");
-    }
-
-
-    @PreDestroy
-    public void PreDestroy(){
-        System.out.println("PreDestroy...");
-    }
-
-    @Override
-    public void destroy() throws Exception {
-        System.out.println("destroy.....");
+        System.out.println("afterPropertiesSet...");
     }
 }

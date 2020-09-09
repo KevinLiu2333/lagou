@@ -1,10 +1,9 @@
 package com.lagou.edu.dao.impl;
 
-import com.lagou.edu.pojo.Account;
 import com.lagou.edu.dao.AccountDao;
+import com.lagou.edu.pojo.Account;
 import com.lagou.edu.utils.ConnectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -17,34 +16,23 @@ import java.sql.ResultSet;
 @Repository("accountDao")
 public class JdbcAccountDaoImpl implements AccountDao {
 
-
-    // @Autowired 按照类型注入
+    //autowired--按照类型注入
     @Autowired
     private ConnectionUtils connectionUtils;
 
-
-
-
-    public void init() {
-        System.out.println("初始化方法.....");
-    }
-
-    public void destory(){
-        System.out.println("销毁方法.....");
-    }
-
     @Override
     public Account queryAccountByCardNo(String cardNo) throws Exception {
-        //从连接池获取连接
-        // Connection con = DruidUtils.getInstance().getConnection();
+        /**
+         * 从连接池获取当前链接
+         */
         Connection con = connectionUtils.getCurrentThreadConn();
         String sql = "select * from account where cardNo=?";
         PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setString(1,cardNo);
+        preparedStatement.setString(1, cardNo);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Account account = new Account();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             account.setCardNo(resultSet.getString("cardNo"));
             account.setName(resultSet.getString("name"));
             account.setMoney(resultSet.getInt("money"));
