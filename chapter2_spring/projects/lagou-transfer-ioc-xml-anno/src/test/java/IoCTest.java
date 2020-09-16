@@ -1,3 +1,5 @@
+import com.lagou.edu.service.TransferService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -9,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class IOCTest {
 
+    @Ignore
     @Test
     public void testIOC() {
         // 通过读取classpath下的xml文件来启动容器(xml模式SE应用下推荐使用)
@@ -25,6 +28,7 @@ public class IOCTest {
     /**
      * 测试bean的延迟加载
      */
+    @Ignore
     @Test
     public void testLazyInit() {
         //容器初始化
@@ -35,5 +39,28 @@ public class IOCTest {
 
     }
 
+    /**
+     * 测试xml aop
+     */
+    @Test
+    public void testAop() throws Exception {
+        //容器初始化
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+        //getBean获取bean对象使用
+        TransferService trans = (TransferService) ac.getBean("transferService");
+        trans.transfer("6029621011000","6029621011001",100);
+    }
 
+
+    /**
+     * 测试xml aop anno
+     */
+    @Test
+    public void testAopAnno() throws Exception {
+        //容器初始化
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+        //getBean获取bean对象使用
+        TransferService trans = (TransferService) ac.getBean("transferService");
+        trans.transfer("6029621011000","6029621011001",100);
+    }
 }

@@ -1,5 +1,7 @@
 package com.lagou.edu.factory;
 
+import com.lagou.edu.anno.Autowired;
+import com.lagou.edu.anno.Service;
 import com.lagou.edu.utils.TransactionManager;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -14,9 +16,9 @@ import java.lang.reflect.Proxy;
  * <p>
  * 代理对象工厂：生成代理对象的
  */
-
+@Service(value = "proxyFactory")
 public class ProxyFactory {
-
+    @Autowired
     private TransactionManager transactionManager;
 
     public void setTransactionManager(TransactionManager transactionManager) {

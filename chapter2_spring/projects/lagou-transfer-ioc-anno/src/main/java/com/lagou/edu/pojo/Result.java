@@ -1,8 +1,11 @@
 package com.lagou.edu.pojo;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author 应癫
  */
+@Component
 public class Result {
 
     private String status;

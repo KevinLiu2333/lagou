@@ -1,5 +1,8 @@
 package com.lagou.edu.utils;
 
+import com.lagou.edu.anno.Autowired;
+import com.lagou.edu.anno.Service;
+
 import java.sql.SQLException;
 
 /**
@@ -11,8 +14,10 @@ import java.sql.SQLException;
  *
  * @author kevliu3
  */
+@Service("transactionManager")
 public class TransactionManager {
 
+    @Autowired
     private ConnectionUtils connectionUtils;
 
     public void setConnectionUtils(ConnectionUtils connectionUtils) {

@@ -1,5 +1,7 @@
 package com.lagou.edu.utils;
 
+import com.lagou.edu.anno.Service;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -12,6 +14,7 @@ import java.sql.SQLException;
  *
  * @author kevliu3
  */
+@Service("connectionUtils")
 public class ConnectionUtils {
 
 //    private ConnectionUtils() {

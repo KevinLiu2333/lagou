@@ -29,6 +29,7 @@ public class TransferServiceImpl implements TransferService {
 //        try {
 //            //开启事务(关闭事务的自动提交)
 //            TransactionManager.getInstance().beginTransaction();
+        System.out.println("执行转账业务逻辑");
         Account from = accountDao.queryAccountByCardNo(fromCardNo);
         Account to = accountDao.queryAccountByCardNo(toCardNo);
         from.setMoney(from.getMoney() - money);
