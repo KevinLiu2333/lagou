@@ -38,7 +38,7 @@ public class DemoController {
     public String handle11(ModelMap modelMap) {
         //服务器时间
         Date date = new Date();
-        //返回服务器时间到前端页面
+        //返回服务器时间到前端页面1
         //封装了数据和页面信息的模型
 //        ModelAndView modelAndView = new ModelAndView();
         //向请求域中放入属性值
