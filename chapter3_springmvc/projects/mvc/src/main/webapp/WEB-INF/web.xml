@@ -6,7 +6,7 @@
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
         <servlet-name>lagoumvc</servlet-name>
-        <servlet-class>com.lagou.edu.mvcframework.LgDispatcherServlet</servlet-class>
+        <servlet-class>com.lagou.edu.mvcframework.servlet.LgDispatcherServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>lagoumvc</servlet-name>

@@ -1,4 +1,4 @@
-package com.lagou.edu.mvcframework;
+package com.lagou.edu.mvcframework.servlet;
 
 import javax.servlet.http.HttpServlet;
 
@@ -10,4 +10,8 @@ import javax.servlet.http.HttpServlet;
  * @author kevliu3
  */
 public class LgDispatcherServlet extends HttpServlet {
+
+    public static void main(String[] args) {
+        
+    }
 }
