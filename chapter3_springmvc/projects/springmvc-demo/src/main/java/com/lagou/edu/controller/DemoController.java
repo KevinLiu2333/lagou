@@ -2,17 +2,13 @@ package com.lagou.edu.controller;
 
 import com.lagou.edu.pojo.QueryVo;
 import com.lagou.edu.pojo.User;
-import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,16 +31,16 @@ public class DemoController  {
 
 
     // SpringMVC的异常处理机制（异常处理器）
-    // 注意：写在这里只会对当前controller类生效
-   /* @ExceptionHandler(ArithmeticException.class)
-    public void handleException(ArithmeticException exception,HttpServletResponse response) {
-        // 异常处理逻辑
-        try {
-            response.getWriter().write(exception.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+    //对当前controller生效
+//    @ExceptionHandler(ArithmeticException.class)
+//    public void hanldleException(ArithmeticException e,HttpServletResponse response) {
+//        //异常处理逻辑
+//        try {
+//            response.getWriter().write(e.getMessage());
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        }
+//    }
 
 
 
