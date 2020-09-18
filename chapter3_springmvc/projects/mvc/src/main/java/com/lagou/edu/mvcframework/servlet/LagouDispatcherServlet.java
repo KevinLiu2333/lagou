@@ -54,7 +54,7 @@ public class LagouDispatcherServlet extends HttpServlet {
     /**
      * 扫描类
      *
-     * @param s
+     * @param scanPackage package
      */
     private void doScan(String scanPackage) {
 
