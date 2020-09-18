@@ -6,7 +6,11 @@
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
         <servlet-name>lagoumvc</servlet-name>
-        <servlet-class>com.lagou.edu.mvcframework.servlet.LgDispatcherServlet</servlet-class>
+        <servlet-class>com.lagou.edu.mvcframework.servlet.LagouDispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:springmvc.properties</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>lagoumvc</servlet-name>
