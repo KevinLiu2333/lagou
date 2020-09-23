@@ -4,6 +4,7 @@ import com.lagou.demo.service.IDemoService;
 import com.lagou.edu.annotations.LagouAutowired;
 import com.lagou.edu.annotations.LagouController;
 import com.lagou.edu.annotations.LagouRequestMapping;
+import com.lagou.edu.annotations.LagouSecurity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author liuku
  */
 @LagouController
+@LagouSecurity({"liukun", "kevin"})
 @LagouRequestMapping("/demo")
 public class DemoController {
 
@@ -31,7 +33,14 @@ public class DemoController {
      * @return
      */
     @LagouRequestMapping("/query")
+    @LagouSecurity({"liukun"})
     public String query(HttpServletRequest request, HttpServletResponse response, String name) {
+        return demoService.get(name);
+    }
+
+    @LagouRequestMapping("/query2")
+    @LagouSecurity({"kevin"})
+    public String query2(HttpServletRequest request, HttpServletResponse response, String name) {
         return demoService.get(name);
     }
 }

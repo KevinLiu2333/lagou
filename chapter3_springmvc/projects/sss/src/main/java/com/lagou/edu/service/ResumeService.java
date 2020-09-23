@@ -1,5 +1,9 @@
 package com.lagou.edu.service;
 
+import com.lagou.edu.pojo.Resume;
+
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: liuku
@@ -8,5 +12,13 @@ package com.lagou.edu.service;
  *
  * @author liuku
  */
-public class ResumeService {
+public interface ResumeService {
+
+     List<Resume> findAll();
+
+     Resume findById(Long id);
+
+     void save(Resume resume);
+
+     void delete(Long id);
 }

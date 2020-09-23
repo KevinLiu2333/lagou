@@ -1,9 +1,6 @@
 package com.lagou.edu.mvcframework.servlet;
 
-import com.lagou.edu.annotations.LagouAutowired;
-import com.lagou.edu.annotations.LagouController;
-import com.lagou.edu.annotations.LagouRequestMapping;
-import com.lagou.edu.annotations.LagouService;
+import com.lagou.edu.annotations.*;
 import com.lagou.edu.mvcframework.pojo.Handler;
 import org.apache.commons.lang3.StringUtils;
 
@@ -67,7 +64,7 @@ public class LagouDispatcherServlet extends HttpServlet {
         //5.构造一个HandlerMapping(处理器映射器),将配置好的url和method建立映射关系
         initHandlerMapping();
         System.out.println("lagou mvc 初始化完成....");
-        //等待请求进入,处理请求    }
+        //等待请求进入,处理请求
     }
 
     /**
@@ -265,6 +262,11 @@ public class LagouDispatcherServlet extends HttpServlet {
             resp.getWriter().write("404 not found");
             return;
         }
+        String name = req.getParameter("name");
+        if (!checkHandlerPermisson(name, handler)) {
+            resp.getWriter().write("401 no permisson");
+            return;
+        }
         //参数绑定
         //获取所有参数类型数组,这个数组长度就是我们最后要传入的args数组的长度
         Class<?>[] parameterTypes = handler.getMethod().getParameterTypes();
@@ -299,6 +301,32 @@ public class LagouDispatcherServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean checkHandlerPermisson(String name, Handler handler) {
+        Object controller = handler.getController();
+        Method method = handler.getMethod();
+        LagouSecurity controllerSecurity = controller.getClass().getAnnotation(LagouSecurity.class);
+        LagouSecurity methodSecurity = method.getAnnotation(LagouSecurity.class);
+        if (!checkPermisson(name, controllerSecurity)) {
+            return false;
+        }
+        if (!checkPermisson(name, methodSecurity)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkPermisson(String name, LagouSecurity security) {
+        if (security == null || security.value().length == 0) {
+            return true;
+        }
+        for (String val : security.value()) {
+            if (val.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Handler getHandler(HttpServletRequest req) {
