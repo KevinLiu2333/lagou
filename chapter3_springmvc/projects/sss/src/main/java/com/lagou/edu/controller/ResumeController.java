@@ -32,7 +32,7 @@ public class ResumeController {
         return "list";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(Long id) {
         resumeService.delete(id);

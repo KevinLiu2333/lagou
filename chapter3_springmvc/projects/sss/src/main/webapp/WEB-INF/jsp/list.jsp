@@ -19,7 +19,7 @@
         if (confirm("确认删除?")) {
             $.ajax({
                 url: '/delete?id=' + id,
-                type: 'POST',
+                type: 'DELETE',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     alert(data);
