@@ -18,7 +18,7 @@
     function deleteResume(id) {
         if (confirm("确认删除?")) {
             $.ajax({
-                url: '/delete?id=' + id,
+                url: '/delete/' + id,
                 type: 'DELETE',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
@@ -31,7 +31,7 @@
 </script>
 <body>
 <div>
-    <button class="btn-primary" style="float: right;margin:10px" onclick="window.location.href = '/edit'">新增</button>
+    <button class="btn-primary" style="float: right;margin:10px" onclick="window.location.href = '/add'">新增</button>
 </div>
 <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
     <thead class="active">
@@ -51,7 +51,7 @@
             <td>${resume.name}</td>
             <td>${resume.phone}</td>
             <td>
-                <button class="btn-primary" onclick="window.location.href = '/edit?id=${resume.id}'">修改</button>
+                <button class="btn-primary" onclick="window.location.href = '/edit/${resume.id}'">修改</button>
                 <button class="btn-primary" onclick="deleteResume(${resume.id})">删除</button>
             </td>
         </tr>

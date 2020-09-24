@@ -4,6 +4,7 @@ import com.lagou.edu.pojo.Resume;
 import com.lagou.edu.service.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,15 +33,21 @@ public class ResumeController {
         return "list";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete(Long id) {
+    public String delete(@PathVariable Long id) {
         resumeService.delete(id);
         return "success";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String toEdit(Long id, Map<String, Object> map) {
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String toEdit() {
+        return "edit";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String toEdit(@PathVariable Long id, Map<String, Object> map) {
         if (id != null) {
             Resume resume = resumeService.findById(id);
             map.put("resume", resume);
