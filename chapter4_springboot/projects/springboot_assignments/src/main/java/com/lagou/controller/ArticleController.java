@@ -27,7 +27,7 @@ public class ArticleController {
     @RequestMapping("/list")
     public String selectArticleList(Model model,
                                     @RequestParam(name = "pageNum", required = false, defaultValue = "0") Integer pageNum,
-                                    @RequestParam(name = "pageSize", required = false, defaultValue = "5") Integer pageSize) {
+                                    @RequestParam(name = "pageSize", required = false, defaultValue = "3") Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
         Page<Article> page = articleService.findAll(pageRequest);
         model.addAttribute("page", page);
