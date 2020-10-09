@@ -1,6 +1,7 @@
 package com.lagou.pojo;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  * @author kevliu3
  */
 @Entity(name = "t_article")
-public class Article {
+public class Article implements Serializable {
+
+    private static final long serialVersionUID = 315901963679681038L;
     /**
      * primary key
      */

@@ -27,9 +27,42 @@
                 </div>
             </article>
         </div>
-
-
     </div>
+    <div class="modal-footer no-margin-top">
+        <ul class="pagination pull-right no-margin">
+
+            <!-- 首页 -->
+            <li>
+                <a th:href="'/list?pageNum=0'">首页</a>
+            </li>
+
+            <!-- 上一页 -->
+            <li th:if="${page.hasPrevious()}">
+                <a th:href="'/list?pageNum=' + ${page.previousPageable().getPageNumber()}" th:text="上一页"></a>
+            </li>
+
+            <!-- 中间页 -->
+            <li th:each="pageNum:${#numbers.sequence(0, page.getTotalPages() - 1)}">
+                <a th:href="'/list?pageNum=' + ${pageNum}" th:text="${pageNum + 1}"
+                   th:if="${pageNum ne page.pageable.getPageNumber()}"></a>
+                <a th:href="'/list?pageNum=' + ${pageNum}" th:text="${pageNum + 1}"
+                   th:if="${pageNum eq page.pageable.getPageNumber()}"
+                   th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+
+            <!-- 下一页 -->
+            <li th:if="${page.hasNext()}">
+                <a th:href="'/list?pageNum=' + ${page.nextPageable().getPageNumber()}" th:text="下一页"></a>
+            </li>
+
+            <!-- 尾页 -->
+            <li>
+                <a th:href="'/list?pageNum=' + ${page.getTotalPages() - 1}">尾页</a>
+            </li>
+
+        </ul>
+    </div>
+
     <!-- 博主信息描述 -->
     <div class="am-u-md-4 am-u-sm-12 blog-sidebar">
         <div class="blog-sidebar-widget blog-bor">
