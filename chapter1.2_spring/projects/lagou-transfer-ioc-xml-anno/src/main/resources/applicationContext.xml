@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--spring xml文件头-->
+<!--全局配置-->
+<!--default-lazy-init="true"-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="com.lagou.edu"/>
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--  第三方jar中的bean定义在xml中  -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--  配置bean的延迟加载,默认false  -->
+    <bean id="lazyResult" class="com.lagou.edu.pojo.Result" init-method="initMethod">
+    </bean>
+    <bean id="companyBean" class="com.lagou.edu.factory.CompanyFactoryBean">
+        <property name="companyInfo" value="拉钩,中关村,500"></property>
+    </bean>
+    <!--  aop相关配置:其实就是把aop相关术语落地  -->
+    <!--  横切逻辑bean  -->
+    <!--    <bean id="logUtils" class="com.lagou.edu.utils.LogUtils">-->
+    <!--    </bean>-->
+    <!--    &lt;!&ndash;  使用config开始进行配置,在内部配置切面aspects  &ndash;&gt;-->
+    <!--    &lt;!&ndash;  切面 = 切入点 + 方位点 + 横切逻辑  &ndash;&gt;-->
+    <!--    <aop:config>-->
+    <!--        <aop:aspect id="logAspect" ref="logUtils">-->
+    <!--            &lt;!&ndash;   锁定具体方法,写表达式   &ndash;&gt;-->
+    <!--            &lt;!&ndash;            <aop:pointcut id="pt1" expression="execution(* *..*.*(..))"/>&ndash;&gt;-->
+    <!--            <aop:pointcut id="pt1" expression="execution(* com.lagou.edu.service.impl.TransferServiceImpl.*(..))"/>-->
+    <!--            &lt;!&ndash;方位信息 前置增强/通知&ndash;&gt;-->
+    <!--            <aop:before method="beforeMethod" pointcut-ref="pt1"/>-->
+    <!--            &lt;!&ndash;aop:after:最终通知&ndash;&gt;-->
+    <!--            &lt;!&ndash;aop:after-returning:正常执行成功通知&ndash;&gt;-->
+    <!--            <aop:after-returning method="succeedMethod" returning="retVal" pointcut-ref="pt1"/>-->
+    <!--            &lt;!&ndash;aop:throwing:异常通知&ndash;&gt;-->
+    <!--            &lt;!&ndash;aop:after:最终通知&ndash;&gt;-->
+    <!--            <aop:around method="afterMethod" pointcut-ref="pt1"/>-->
+    <!--        </aop:aspect>-->
+    <!--    </aop:config>-->
+    <!--  proxy-target-class="true" 强制使用cglib动态代理  -->
+    <aop:aspectj-autoproxy/>
+</beans>

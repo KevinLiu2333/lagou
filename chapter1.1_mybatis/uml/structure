@@ -1,0 +1,116 @@
+@startuml
+package pojo{
+  class Configuration
+  class DataSource
+  class MappedStatement
+}
+
+package io{
+  class Resources
+}
+
+package config{
+  class BoundSql
+  class XMLConfigerBuilder
+  class XMLMapperBuilder
+}
+
+package sqlSession{
+  interface SqlSession
+  class DefualtSqlSession
+  class SqlSessionFactory
+  class SqlSessionFactoryBuilder
+  class DefaultSqlSessionFactory
+  class Executor
+  class SimpleExecutor
+}
++class Configuration {
+  -DataSource dataSource
+  -Map<String,MappedStatement> mappedStatementMap
+}
+
++class DataSource{
+
+}
+DataSource <-- Configuration
+
+
++class MappedStatement{
+  -Integer id
+  -String sql
+  -Class<?> parameterType
+  -Class<?> resultType
+}
+MappedStatement <-- Configuration
+
++class Resources{
+  +InputStream getResourceAsSteam(String path)
+}
+
++class SqlSessionFactoryBuilder{
+  -Configuration configuration
+  +SqlSessionFactory build(InputStream stream)
+}
+Configuration <-- SqlSessionFactoryBuilder
+SqlSessionFactory<.. SqlSessionFactoryBuilder
+
++class XMLConfigerBuilder{
+  -Configuration configuration
+  +Configuration parseConfiguration(InputStream inputStream)
+}
+Configuration <-- XMLConfigerBuilder
+Resources <.. XMLConfigerBuilder
+DataSource <.. XMLConfigerBuilder
+XMLConfigerBuilder <.. XMLMapperBuilder
++class XMLMapperBuilder {
+    -Configuration configuration
+    +void parse(InputStream inputStream)
+}
+Configuration <-- XMLMapperBuilder
+Resources <.. XMLMapperBuilder
+MappedStatement <.. XMLMapperBuilder
++interface SqlSessionFactory {
+    +SqlSession openSession()
+}
+
+class DefaultSqlSessionFactory <<SqlSessionFactory>>{
+  -Configuration configuration
+  +SqlSession openSession()
+
+}
+Configuration <-- DefaultSqlSessionFactory
+SqlSessionFactory <|.. DefaultSqlSessionFactory
+SqlSession <.. DefaultSqlSessionFactory
+
++interface SqlSession{
++<E> List<E> selectList(String statementId, Object... param)
++<T> T selectOne(String statementId,Object... params)
++void close()
+}
+
++class DefualtSqlSession <<SqlSession>>{
+  -Configuration configuration
+  -Executor executor
+}
+Configuration <-- DefualtSqlSession
+Executor <-- DefualtSqlSession
+SqlSession <|.. DefualtSqlSession
+
++interface Executor{
+  <E> List<E> query(Configuration config,MappedStatement statement,Object params)
+  void close()
+}
+Configuration <-- Executor
+MappedStatement <-- Executor
++class SimpleExecutor <<Executor>>{
+  -BoundSql getBoundSql(String sql)
+  <E> List<E> query(Configuration config,MappedStatement statement,Object params)
+  void close()
+}
+BoundSql <.. SimpleExecutor
+Executor <|.. SimpleExecutor
++class BoundSql{
+  -String sqlText
+  -List<ParameterMapping> parameterMappingList;
+}
+@enduml
